@@ -30,6 +30,7 @@ typedef struct s_philo
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
 	pthread_mutex_t	*info;
+	pthread_t		thread;
 }	t_philo;
 
 typedef struct s_table
@@ -47,4 +48,6 @@ typedef struct s_table
 }					t_table;
 
 void	parser(int argc, char **argv, t_table *table);
+void	init(t_table *table);
+void	*philo(void *data);
 #endif

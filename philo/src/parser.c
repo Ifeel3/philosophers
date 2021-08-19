@@ -12,15 +12,6 @@
 
 #include "philo.h"
 
-static void	error(int errnum)
-{
-	if (errnum == 1)
-		printf("Error: wrong amount of arguments...\n");
-	if (errnum == 2)
-		printf("Error: wrong argument...\n");
-	exit(0);
-}
-
 static int	checkargs(char **argv)
 {
 	int	i;
@@ -66,6 +57,15 @@ static void	parseargs(char **argv, t_table *table)
 		table->must_eat = convert(argv[5]);
 	else
 		table->must_eat = -1;
+}
+
+static void	error(int errnum)
+{
+	if (errnum == 1)
+		printf("Error: wrong amount of arguments...\n");
+	if (errnum == 2)
+		printf("Error: wrong argument...\n");
+	exit(0);
 }
 
 void	parser(int argc, char **argv, t_table *table)
