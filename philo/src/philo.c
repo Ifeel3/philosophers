@@ -41,7 +41,7 @@ static void	p_eat(t_philo *philo)
 	p_print(philo, "is start eating");
 	gettimeofday(&philo->last_eat, NULL);
 	philo->count++;
-	usleep((philo->time_eat) * 1000);
+	usleep((philo->time_eat - 3) * 1000);
 	pthread_mutex_unlock(philo->left);
 	pthread_mutex_unlock(philo->right);
 }
@@ -49,7 +49,7 @@ static void	p_eat(t_philo *philo)
 static void	p_sleep(t_philo *philo)
 {
 	p_print(philo, "is sleeping");
-	usleep((philo->time_sleep) * 1000);
+	usleep((philo->time_sleep - 3) * 1000);
 	p_print(philo, "is thinking");
 }
 

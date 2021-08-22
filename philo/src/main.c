@@ -50,7 +50,7 @@ static void	*monitor(void *data)
 			printf("All philosophers are full\n");
 			return (NULL);
 		}
-		usleep(10);
+		usleep(1000);
 	}
 	pthread_mutex_lock(&table->info);
 	printf("%zu %d is dead\n", getms(&table->start), i + 1);
