@@ -30,7 +30,6 @@ static void	mutex_init(t_table *table)
 static void	params(t_table *table, int i)
 {
 	table->philos[i].number = i;
-	table->philos[i].time_die = table->time_die;
 	table->philos[i].time_eat = table->time_eat;
 	table->philos[i].time_sleep = table->time_sleep;
 	table->philos[i].must_eat = table->must_eat;
@@ -41,6 +40,7 @@ static void	params(t_table *table, int i)
 		table->philos[i].right = &table->forks[i + 1];
 	table->philos[i].info = &table->info;
 	table->philos[i].start = table->start;
+	table->philos[i].last_eat = table->start;
 	pthread_create(&table->philos[i].thread, NULL,
 		   philo, &table->philos[i]);
 	pthread_detach(table->philos[i].thread);

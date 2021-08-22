@@ -22,11 +22,12 @@
 typedef struct s_philo
 {
 	int				number;
-	int				time_die;
 	int				time_eat;
 	int				time_sleep;
 	int				must_eat;
+	int				count;
 	struct timeval	start;
+	struct timeval	last_eat;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
 	pthread_mutex_t	*info;
@@ -47,7 +48,9 @@ typedef struct s_table
 	pthread_t		monitor;
 }					t_table;
 
-void	parser(int argc, char **argv, t_table *table);
-void	init(t_table *table);
-void	*philo(void *data);
+void			parser(int argc, char **argv, t_table *table);
+void			init(t_table *table);
+void			*philo(void *data);
+long			getms(struct timeval *start);
+void			my_sleep(long time);
 #endif

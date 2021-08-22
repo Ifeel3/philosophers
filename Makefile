@@ -6,30 +6,27 @@ PATH	= philo/src
 SRC		= $(PATH)/main.c \
 		$(PATH)/parser.c \
 		$(PATH)/philo.c \
-		$(PATH)/init.c
+		$(PATH)/init.c \
+		$(PATH)/utils.c
 OBJ		= $(SRC:.c=.o)
 
 .PHONY: all clean fclean re norm
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $? -o $@
-	@echo "creating object file $@"
+	$(CC) $(CFLAGS) -c $? -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(OBJ) -o philo/$@
-	@echo "creating philo binary file"
+	$(CC) $(OBJ) -o philo/$@
 
 clean:
-	@rm -f $(OBJ)
-	@echo "clean object files"
+	rm -f $(OBJ)
 
 fclean: clean
-	@rm -f philo/$(NAME)
-	@echo "clean binary file"
+	rm -f philo/$(NAME)
 
 re: fclean all
 
 norm:
-	@norminette $(SRC) philo/philo.h
+	@norminette -R CheckForbiddenSourceHeader $(SRC) philo/philo.h
