@@ -59,20 +59,18 @@ static void	parseargs(char **argv, t_table *table)
 		table->must_eat = -1;
 }
 
-static void	error(int errnum)
-{
-	if (errnum == 1)
-		printf("Error: wrong amount of arguments...\n");
-	if (errnum == 2)
-		printf("Error: wrong argument...\n");
-	exit(0);
-}
-
-void	parser(int argc, char **argv, t_table *table)
+int	parser(int argc, char **argv, t_table *table)
 {
 	if (argc < 5 || argc > 6)
-		error(1);
+	{
+		printf("Error: wrong amount of arguments...\n");
+		return (1);
+	}
 	if (checkargs(argv))
-		error(2);
+	{
+		printf("Error: wrong argument...\n");
+		return (1);
+	}
 	parseargs(argv, table);
+	return (0);
 }

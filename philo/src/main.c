@@ -61,7 +61,8 @@ int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	parser(argc, argv, &table);
+	if (parser(argc, argv, &table))
+		return (0);
 	init(&table);
 	pthread_create(&table.monitor, NULL, monitor, &table);
 	pthread_join(table.monitor, NULL);

@@ -48,9 +48,8 @@ typedef struct s_table
 	pthread_t		monitor;
 }					t_table;
 
-void			parser(int argc, char **argv, t_table *table);
+int				parser(int argc, char **argv, t_table *table);
 void			init(t_table *table);
 void			*philo(void *data);
 long			getms(struct timeval *start);
-void			my_sleep(long time);
 #endif

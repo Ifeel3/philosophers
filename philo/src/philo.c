@@ -24,24 +24,13 @@ static void	p_print(t_philo *philo, char *string)
 
 static void	p_eat(t_philo *philo)
 {
-	if (philo->number % 2 != 0)
-	{
-		pthread_mutex_lock(philo->left);
-		p_print(philo, "has taken a left fork");
-		pthread_mutex_lock(philo->right);
-		p_print(philo, "has taken a right fork");
-	}
-	else
-	{
-		pthread_mutex_lock(philo->right);
-		p_print(philo, "has taken a right fork");
-		pthread_mutex_lock(philo->left);
-		p_print(philo, "has taken a left fork");
-	}
+	pthread_mutex_lock(philo->left);
+	p_print(philo, "has taken a fork");
+	pthread_mutex_lock(philo->right);
 	p_print(philo, "is start eating");
 	gettimeofday(&philo->last_eat, NULL);
+	usleep((philo->time_eat) * 1000);
 	philo->count++;
-	usleep((philo->time_eat - 3) * 1000);
 	pthread_mutex_unlock(philo->left);
 	pthread_mutex_unlock(philo->right);
 }
@@ -49,7 +38,7 @@ static void	p_eat(t_philo *philo)
 static void	p_sleep(t_philo *philo)
 {
 	p_print(philo, "is sleeping");
-	usleep((philo->time_sleep - 3) * 1000);
+	usleep((philo->time_sleep) * 1000);
 	p_print(philo, "is thinking");
 }
 
@@ -59,6 +48,8 @@ void	*philo(void *data)
 
 	philo = (t_philo *)data;
 	philo->count = 0;
+	if (philo->number % 2 != 0)
+		usleep(1000);
 	while (philo->count != philo->must_eat)
 	{
 		p_eat(philo);

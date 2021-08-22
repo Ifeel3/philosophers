@@ -1,6 +1,6 @@
 NAME	= philo
 CC		= clang
-#FLAGS	= -Wall -Werror -Wextra
+FLAGS	= -Wall -Werror -Wextra
 CFLAGS	= $(FLAGS) -Iphilo/
 PATH	= philo/src
 SRC		= $(PATH)/main.c \
