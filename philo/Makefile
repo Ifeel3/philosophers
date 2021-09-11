@@ -1,7 +1,7 @@
 NAME	= philo
-#FLAGS	= -Wall -Werror -Wextra
-CFLAGS	= $(FLAGS) -Iphilo/src
-PATH	= philo/src
+FLAGS	= -Wall -Werror -Wextra
+CFLAGS	= $(FLAGS) -Isrc/
+PATH	= src
 SRC		= $(PATH)/main.c \
 		$(PATH)/ft_atoi.c \
 		$(PATH)/utils.c \
@@ -21,15 +21,15 @@ CC		= clang
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o philo/$@
+	$(CC) $(OBJ) -o $@
 
 clean:
 	rm -f $(OBJ)
 
 fclean: clean
-	rm -f philo/$(NAME)
+	rm -f $(NAME)
 
 re: fclean $(NAME)
 
 norm:
-	norminette -R CheckForbiddenSourceHeader $(SRC) philo/src/philo.h
+	norminette -R CheckForbiddenSourceHeader $(SRC) src/philo.h

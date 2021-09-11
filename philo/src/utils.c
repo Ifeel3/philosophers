@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lvallie <lvallie@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: lvallie <lvallie@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 01:42:21 by lvallie           #+#    #+#             */
 /*   Updated: 2021/08/26 01:42:26 by lvallie          ###   ########.fr       */

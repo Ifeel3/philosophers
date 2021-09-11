@@ -25,7 +25,7 @@ typedef struct s_philo
 	int				time_sleep;
 	int				must_eat;
 	int				count;
-	int				state;
+	int				pause;
 	struct timeval	start;
 	struct timeval	last_eat;
 	pthread_t		thread;
@@ -54,5 +54,5 @@ int		init(t_table *table);
 long	getms(struct timeval *time);
 void	*philo(void *data);
 void	*monitor(void *data);
-
+void	my_sleep(long time);
 #endif

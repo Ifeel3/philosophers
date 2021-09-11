@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_table table;
+	t_table	table;
 
 	if (parser(argc, argv, &table) == 0)
 		return (0);

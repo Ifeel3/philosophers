@@ -16,7 +16,8 @@ static int	mutex_init(t_table *table)
 {
 	int	i;
 
-	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->amount);
+	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* table->amount);
 	if (!table->forks)
 	{
 		printf("Error: memory not allocated for mutex...\n");
@@ -44,7 +45,7 @@ static void	philo_fill(t_table *table, t_philo *philo)
 	else
 		philo->right = &table->forks[philo->index + 1];
 	philo->info = &table->info;
-	philo->state = 0;
+	philo->pause = 1;
 }
 
 static int	philo_init(t_table *table)
@@ -77,7 +78,8 @@ static void	philo_start(t_table *table)
 	{
 		table->philos[i].start = table->start;
 		table->philos[i].last_eat = table->start;
-		pthread_create(&table->philos[i].thread, NULL, philo, &table->philos[i]);
+		pthread_create(&table->philos[i].thread, NULL,
+			philo, &table->philos[i]);
 		pthread_detach(table->philos[i].thread);
 		i++;
 	}

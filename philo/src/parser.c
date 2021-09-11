@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lvallie <lvallie@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: lvallie <lvallie@student.21-school.ru.     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 01:42:45 by lvallie           #+#    #+#             */
 /*   Updated: 2021/08/26 01:42:47 by lvallie          ###   ########.fr       */
@@ -59,4 +59,3 @@ int	parser(int argc, char **argv, t_table *table)
 	parse_args(argv, table);
 	return (1);
 }
-
