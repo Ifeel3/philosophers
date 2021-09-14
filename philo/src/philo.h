@@ -24,13 +24,15 @@ typedef struct s_philo
 	int				time_eat;
 	int				time_sleep;
 	int				must_eat;
+	int				time_die;
 	int				count;
-	int				pause;
+	int				is_dead;
 	struct timeval	start;
 	struct timeval	last_eat;
 	pthread_t		thread;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
+	pthread_mutex_t	is_eat;
 	pthread_mutex_t	*info;
 }	t_philo;
 
@@ -45,7 +47,8 @@ typedef struct s_table
 	pthread_mutex_t	info;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
-	pthread_t		monitor;
+	pthread_t		*monitors;
+	pthread_t		main_monitor;
 }		t_table;
 
 int		ft_atoi(const char *str);
@@ -54,5 +57,6 @@ int		init(t_table *table);
 long	getms(struct timeval *time);
 void	*philo(void *data);
 void	*monitor(void *data);
+void	*main_monitor(void *data);
 void	my_sleep(long time);
 #endif

@@ -21,9 +21,7 @@ static void	p_print(t_philo *philo, char *string)
 
 static void	p_eat(t_philo *philo)
 {
-	while (philo->pause == 1)
-		;
-	if (philo->index % 2 == 0)
+	if ((philo->index + 1) % 2 != 0)
 	{
 		pthread_mutex_lock(philo->right);
 		p_print(philo, "has taken a fork");
@@ -35,9 +33,10 @@ static void	p_eat(t_philo *philo)
 		p_print(philo, "has taken a fork");
 		pthread_mutex_lock(philo->right);
 	}
+	pthread_mutex_lock(&philo->is_eat);
 	gettimeofday(&philo->last_eat, NULL);
+	pthread_mutex_unlock(&philo->is_eat);
 	p_print(philo, "is eating");
-	philo->pause = 1;
 	philo->count++;
 	my_sleep(philo->time_eat);
 	pthread_mutex_unlock(philo->right);
@@ -56,6 +55,8 @@ void	*philo(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
+	if ((philo->index + 1) % 2 == 0)
+		usleep(50);
 	while (philo->count != philo->must_eat)
 	{
 		p_eat(philo);

@@ -45,7 +45,8 @@ static void	philo_fill(t_table *table, t_philo *philo)
 	else
 		philo->right = &table->forks[philo->index + 1];
 	philo->info = &table->info;
-	philo->pause = 1;
+	philo->time_die = table->time_die;
+	philo->is_dead = 0;
 }
 
 static int	philo_init(t_table *table)
@@ -56,6 +57,12 @@ static int	philo_init(t_table *table)
 	if (!table->philos)
 	{
 		printf("Error: memory not allocated for philos...\n");
+		return (0);
+	}
+	table->monitors = (pthread_t *)malloc(sizeof(pthread_t) * table->amount);
+	if (!table->philos)
+	{
+		printf("Error: memory not allocated for monitors...\n");
 		return (0);
 	}
 	i = 0;
@@ -81,9 +88,10 @@ static void	philo_start(t_table *table)
 		pthread_create(&table->philos[i].thread, NULL,
 			philo, &table->philos[i]);
 		pthread_detach(table->philos[i].thread);
+		pthread_create(&table->monitors[i], NULL, monitor, &table->philos[i]);
+		pthread_detach(table->monitors[i]);
 		i++;
 	}
-	pthread_create(&table->monitor, NULL, monitor, table);
 }
 
 int	init(t_table *table)

@@ -29,5 +29,5 @@ void	my_sleep(long time)
 
 	gettimeofday(&start, NULL);
 	while (getms(&start) < time)
-		usleep(10);
+		usleep(100);
 }

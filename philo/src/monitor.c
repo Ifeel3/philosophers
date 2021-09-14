@@ -12,23 +12,29 @@
 
 #include "philo.h"
 
-static int	find_min_count(t_table *table)
+void	*monitor(void *data)
 {
-	int	i;
-	int	min;
+	t_philo	*philo;
+	int		i;
 
 	i = 0;
-	min = table->philos[0].count;
-	while (i < table->amount)
+	philo = (t_philo *)data;
+	while (1)
 	{
-		if (table->philos[i].count < min)
-			min = table->philos[i].count;
-		i++;
+		pthread_mutex_lock(&philo->is_eat);
+		if (getms(&philo->last_eat) > philo->time_die
+			&& philo->count != philo->must_eat)
+			break ;
+		pthread_mutex_unlock(&philo->is_eat);
+		my_sleep(10);
 	}
-	return (min);
+	pthread_mutex_lock(philo->info);
+	printf("%lu %d is dead\n", getms(&philo->start), i + 1);
+	philo->is_dead = 1;
+	return (NULL);
 }
 
-static int	check_end(t_table *table)
+static int	check_full(t_table *table)
 {
 	int	i;
 
@@ -39,34 +45,41 @@ static int	check_end(t_table *table)
 			return (0);
 		i++;
 	}
-	pthread_mutex_lock(&table->info);
-	printf("all philosophers are full\n");
 	return (1);
 }
 
-void	*monitor(void *data)
+static int	check_dead(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->amount)
+	{
+		if (table->philos[i].is_dead)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	*main_monitor(void *data)
 {
 	t_table	*table;
 	int		i;
 
-	i = 0;
 	table = (t_table *)data;
+	i = 0;
 	while (1)
 	{
-		if (getms(&table->philos[i].last_eat) > table->time_die
-			&& table->philos[i].count != table->must_eat)
+		if (check_dead(table))
 			break ;
-		if (table->philos[i].count <= find_min_count(table))
-			table->philos[i].pause = 0;
-		if (i == table->amount - 1)
-			i = 0;
-		else
-			i++;
-		if (check_end(table))
-			return (NULL);
-		my_sleep(1);
+		if (check_full(table))
+		{
+			pthread_mutex_lock(&table->info);
+			printf("All philosophers are full\n");
+			break ;
+		}
+		usleep(300);
 	}
-	pthread_mutex_lock(&table->info);
-	printf("%lu %d is dead\n", getms(&table->start), i + 1);
 	return (NULL);
 }

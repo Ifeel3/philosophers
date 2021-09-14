@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 		return (0);
 	if (init(&table) == 0)
 		return (0);
-	pthread_join(table.monitor, NULL);
+	pthread_create(&table.main_monitor, NULL, main_monitor, &table);
+	pthread_join(table.main_monitor, NULL);
 	return (0);
 }
